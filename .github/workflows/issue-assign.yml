@@ -7,15 +7,17 @@ on:
 
 jobs:
   assign:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
+    permissions: {issues: write}
+    runs-on: ubuntu-slim
+    timeout-minutes: 3
+    defaults: {run: {shell: bash}}
 
     steps:
-    - name: Assign issue to repository owner
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      run: |
-        # https://docs.github.com/en/github-cli
-        # https://cli.github.com/manual/gh_issue
-        gh issue edit  "${{ github.event.issue.number }}" --add-assignee "${{ github.repository_owner }}" --repo "${{ github.repository }}"
+      - name: Assign issue to repository owner
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          # https://cli.github.com/manual/gh_issue
+          # https://docs.github.com/en/github-cli
+          gh issue edit  "${{ github.event.issue.number }}" \
+            --add-assignee "${{ github.repository_owner }}" --repo "${{ github.repository }}"
