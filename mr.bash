@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # https://github.com/vbem/multi-runners
+# https://github.com/akshatmittal/gh-runner-setup
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # common configurations
@@ -17,7 +18,7 @@ declare -rg DIR_THIS FILE_THIS
 
 # environment variables for customization
 # URL of this application
-declare -rg MR_URL='https://github.com/vbem/multi-runners'
+declare -rg MR_URL='https://github.com/akshatmittal/gh-runner-setup'
 # baseurl of GitHub service, defaults to https://github.com
 declare -rg MR_GITHUB_BASEURL="${MR_GITHUB_BASEURL:-https://github.com}"
 # baseurl of GitHub API, defaults to https://api.github.com
@@ -288,8 +289,8 @@ function mr::addRunner {
     tarpath="$(mr::downloadRunner)" || return $?
 
     local commonLabels="controller:${MR_URL#https://},hostname:$HOSTNAME"
-    commonLabels+=",createdtime:$(date --iso-8601=sec)"
-    [[ -r /etc/os-release ]] && commonLabels+=",os:$(source /etc/os-release && echo "$ID-$VERSION_ID")"
+    # commonLabels+=",createdtime:$(date --iso-8601=sec)"
+    # [[ -r /etc/os-release ]] && commonLabels+=",os:$(source /etc/os-release && echo "$ID-$VERSION_ID")"
     [[ -n "$extraLabels" ]] && commonLabels+=",$extraLabels"
 
     for i in $(seq 1 "$count"); do
