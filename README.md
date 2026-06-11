@@ -52,7 +52,8 @@ Options:
   --labels      Extra labels for the runner
   --group       Runner group for the runner
   --token       Runner registration token, takes precedence over MR_GITHUB_PAT
-  --dotenv      The lines to set in runner's '.env' files
+  --dotenv      Extra lines to set in runner's '.env' files
+                ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER=true is always managed
   --count       The number to add or del, optional, defaults to 1 for add and all for del
   --opts        Extra options for 'config.sh', optional, such as '--no-default-labels'
   -h --help     Show this help.
@@ -184,6 +185,12 @@ Then the following lines will be added to `.env` file located in self-hosted run
 TZ=Asia/Shanghai
 PATH=$PATH:/mybin
 all_proxy=socks5h://localhost:1080
+```
+
+Every runner created by this script also gets the following managed `.env` line. If `--dotenv` includes the same variable, that line is replaced so this value is always used:
+
+```plain
+ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER=true
 ```
 
 ### Inject hook script before starting the runner service
